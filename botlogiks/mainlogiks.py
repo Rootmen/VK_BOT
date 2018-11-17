@@ -46,13 +46,12 @@ def NewPostVkCallBack(requestMy):
                 break
         doc.save(NameFail)
         excel_file_name  = os.path.abspath(NameFail)
-        upload_url = vk.docs.getMessagesUploadServer(type='doc', peer_id=user_id)['upload_url']
-
+        upload_url = api.docs.getMessagesUploadServer(type='doc', peer_id=user_id)['upload_url']
         response = requests.post(upload_url, files={'file': open(NameFail, 'rb')})
         result = json.loads(response.text)
         file = result['file']
 
-        jsonmy = vk.docs.save(file=file, title='Документ', tags=[])[0]
+        jsonmy = api.save(file=file, title='Документ', tags=[])[0]
 
         owner_id = jsonmy['owner_id']
         photo_id = jsonmy['id']
