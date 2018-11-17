@@ -1,31 +1,24 @@
-from flask import Flask, request, json
-from static_data import *
-import vk
+from botlogiks.mainlogiks import NewPostVkCallBack
+from flask import Flask, request
+from database.config import Config
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
+app.config.from_object(Config)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 @app.route('/vk_call', methods=['POST'])
 def processing():
-    # Распаковываем json из пришедшего POST-запроса
-    data = json.loads(request.data)
-    # Вконтакте в своих запросах всегда отправляет поле типа
-    if 'type' not in data.keys():
-        return 'not vk'
-    if data['type'] == 'confirmation':
-        return confirmation_token
-    elif data['type'] == 'message_new':
-        session = vk.Session()
-        api = vk.API(session, v=5.8)
-        user_id = data['object']['user_id']
-        api.messages.send(access_token=token, user_id=str(user_id), message='Привет, я новый бот!')
-        # Сообщение о том, что обработка прошла успешно
-        return 'ok'
+    NewPostVkCallBack(request.data)
+    return 'ok'
 
 
-@app.route('/vk_call2/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def processing2():
-    return 'not vk'
+    return 'Здесь пока ничего нету'
 
 
 if __name__ == '__main__':
