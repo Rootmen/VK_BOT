@@ -7,11 +7,6 @@ app = Flask(__name__)
 
 @app.route('/vk_call', methods=['POST'])
 def processing():
-    return 'ca3d62bd'
-
-
-@app.route('/vk_call', methods=['POST'])
-def processing():
     # Распаковываем json из пришедшего POST-запроса
     data = json.loads(request.data)
     # Вконтакте в своих запросах всегда отправляет поле типа
