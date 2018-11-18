@@ -12,8 +12,7 @@ migrate = Migrate(app, db)
 
 @app.route('/vk_call', methods=['POST'])
 def processing():
-    NewPostVkCallBack(request.data)
-    return 'ok'
+    return NewPostVkCallBack(request.data)
 
 
 @app.route('/', methods=['GET'])
