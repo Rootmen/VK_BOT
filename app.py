@@ -1,12 +1,14 @@
 from flask import Flask, request, json
-from vk_mainlogik.mesg_logik import SendMesgAll
+from vk_mainlogik.mesg_logik import treadControl, sendMesgAll
+
 app = Flask(__name__)
+treadControl()
 
 
-@app.route('/vk_call', methods=['POST'])
+@app.route('/', methods=['POST'])
 def processing():
-    return SendMesgAll(json.loads(request.data))
+    return sendMesgAll(json.loads(request.data))
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
