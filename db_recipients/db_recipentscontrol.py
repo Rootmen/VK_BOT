@@ -35,7 +35,7 @@ def startRecipientCall(call_fincion, args):
     mysel = cursor.execute("SELECT * FROM RecipientTable")
     for i, row in enumerate(mysel):
         for j, value in enumerate(row):
-            call_fincion(row[j], *args)
+            call_fincion(row[j], args)
     conn.close()
 
 
